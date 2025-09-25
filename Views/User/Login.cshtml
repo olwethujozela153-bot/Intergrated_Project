@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Make Payment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #0078D7;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="paymentForm">
+    <h2>Make Payment</h2>
+
+    <label>Account Holder</label>
+    <input type="text" id="acctHolder" required>
+
+    <label>Bank Type</label>
+    <select id="bankType" required>
+      <option value="">-- Select Bank --</option>
+      <option value="Capitec Bank">Capitec Bank</option>
+      <option value="Absa Bank">Absa Bank</option>
+      <option value="Standard Bank">Standard Bank</option>
+      <option value="Nedbank">Nedbank</option>
+      <option value="First National Bank(FNB)">First National Bank (FNB)</option>
+      <option value="TymeBank">TymeBank</option>
+      <option value="Bidvest Bank">Bidvest Bank</option>
+      <option value="Discovery Bank">Discovery Bank</option>
+      <option value="African Bank">African Bank</option>
+      <option value="Investec Bank">Investec Bank</option>
+    </select>
+
+    <label>Bank Branch</label>
+    <select id="bankBranch" required>
+      <option value="">-- Select Branch --</option>
+    </select>
+
+    <label>Account Number</label>
+    <input type="text" id="acctNumber" maxlength="12" required>
+
+    <label>Card Number</label>
+    <input type="text" id="cardNumber" maxlength="16" required>
+
+    <label>Expiration (MM/YY)</label>
+    <input type="text" id="expDate" placeholder="MM/YY" required>
+
+    <label>CVV</label>
+    <input type="password" id="cvv" maxlength="3" required>
+
+    <label>Card PIN</label>
+    <input type="password" id="pin" maxlength="4" required>
+
+    <label>Payment Amount (R)</label>
+    <input type="number" id="amount" step="0.01" required>
+
+    <button type="submit">Submit Payment</button>
+  </form>
+
+  <script>
+    const bankBranches = {
+      "Capitec Bank": ["410010"],
+      "Absa Bank": ["632005 - Absa Tower West", "630011 - Durban", "632005 - Cape Town"],
+      "Standard Bank": ["051001 - Sandton", "050000 - Cape Town", "051001 - Durban"],
+      "Nedbank": ["198765 - Sandton", "198765 - Cape Town", "198765 - Durban"],
+      "First National Bank(FNB)": ["250655 - Johannesburg", "250655 - Cape Town", "250655 - Durban"],
+      "TymeBank": ["678910 - Tymebank"],
+      "Bidvest Bank": ["462005"],
+      "Discovery Bank": ["678901"],
+      "African Bank": ["460305"],
+      "Investec Bank": ["580105"]
+    };
+
+    document.getElementById("bankType").addEventListener("change", function() {
+      const selectedBank = this.value;
+      const branchSelect = document.getElementById("bankBranch");
+      branchSelect.innerHTML = "<option value=''>-- Select Branch --</option>";
+
+      if (bankBranches[selectedBank]) {
+        bankBranches[selectedBank].forEach(branch => {
+          let option = document.createElement("option");
+          option.value = branch;
+          option.textContent = branch;
+          branchSelect.appendChild(option);
+        });
+      }
+    });
+
+    document.getElementById("paymentForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Payment Submitted Successfully!");
+    });
+  </script>
+
+</body>
+</html>

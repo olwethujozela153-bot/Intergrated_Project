@@ -1,0 +1,191 @@
+﻿@model Intergrated_Project.Models.User
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Court Official Registration - Durban Metro</title>
+    <style>
+        /* Durban Metro Color Scheme */
+        :root {
+            --durban-blue: #0055a4;
+            --durban-dark-blue: #003366;
+            --durban-light-blue: #0078d7;
+            --durban-white: #ffffff;
+            --durban-light-gray: #f4f6f9;
+            --durban-red: #d90000;
+            --durban-gold: #FFD700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--durban-dark-blue), var(--durban-blue));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .register-container {
+            background-color: var(--durban-white);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+        }
+
+        .court-icon {
+            font-size: 40px;
+            color: var(--durban-blue);
+            text-align: center;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        h2 {
+            color: var(--durban-blue);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .durban-header {
+            color: var(--durban-blue);
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--durban-dark-blue);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--durban-blue);
+            outline: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--durban-blue);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+            button[type="submit"]:hover {
+                background-color: var(--durban-dark-blue);
+            }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 15px;
+        }
+
+            .login-link a {
+                color: var(--durban-blue);
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .login-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .field-validation-error {
+            color: var(--durban-red);
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="court-icon">⚖</div>
+        <div class="durban-header">Durban Metro Police</div>
+        <h2>Court Official Registration</h2>
+
+        @using (Html.BeginForm("Register", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name, new { placeholder = "Enter your first name" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "field-validation-error" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Surname)
+                @Html.TextBoxFor(m => m.Surname, new { placeholder = "Enter your last name" })
+                @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "field-validation-error" })
+            </div>
+
+          
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { placeholder = "Enter your email", type = "email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "field-validation-error" })
+            </div>
+
+          
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Create a password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "field-validation-error" })
+            </div>
+
+            
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        }
+
+        <div class="login-link">
+            Already have an account? <a href="@Url.Action("Login", "User")">Sign in</a>
+        </div>
+    </div>
+
+</body>
+</html>

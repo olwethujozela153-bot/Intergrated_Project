@@ -1,0 +1,589 @@
+﻿@model Intergrated_Project.Models.Officers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Police - Traffic Fine Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gray: #7f8c8d;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        .sidebar {
+            width: 250px;
+            background: var(--primary);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo h2 {
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .menu {
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .menu-item i {
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome h1 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        .welcome p {
+            color: var(--gray);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+        }
+
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .stat-text h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .stat-text p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+
+        .recent-fines {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            color: var(--dark);
+        }
+
+        .view-all {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status.paid {
+            background: #e7f6e9;
+            color: var(--success);
+        }
+
+        .status.pending {
+            background: #fef3e2;
+            color: var(--warning);
+        }
+
+        .status.unpaid {
+            background: #feecea;
+            color: var(--danger);
+        }
+
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin: 0 auto 15px;
+        }
+
+        .action-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .action-card p {
+            color: var(--gray);
+            font-size: 13px;
+        }
+
+
+       
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Metro<span>Police</span></h2>
+            </div>
+            <div class="menu">
+                <div class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-ticket-alt"></i>
+                    <span>Issue Fine</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-list"></i>
+                    <span>Fine Records</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-car"></i>
+                    <span>Vehicle Lookup</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-user"></i>
+                    <span>Driver Lookup</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-content">
+
+            <div class="header">
+                <div class="welcome">
+                    <h1>Welcome, Officer Johnson</h1>
+                    <p>Friday, 21 August 2025</p>
+                </div>
+                <div class="user-info">
+                    <img src="https://xsgames.co/randomusers/avatar.php?g=male" alt="Officer Avatar">
+                    <div>
+                        <h4>Badge #8345</h4>
+                        <p>Traffic Division</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e3f2fd; color: #1976d2;">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>142</h3>
+                        <p>Fines Issued Today</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e8f5e9; color: #388e3c;">
+                        <i class="fas fa-rand-sign"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>R 8,450</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fff3e0; color: #f57c00;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>28</h3>
+                        <p>Pending Payments</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fbe9e7; color: #d84315;">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h3>14</h3>
+                        <p>Unpaid Fines</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="recent-fines">
+                <div class="section-header">
+                    <h2>Recent Fines</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date Issued</th>
+                            <th>Driver</th>
+                            <th>Vehicle</th>
+                            <th>Violation</th>
+                            <th>Amount (ZAR)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>21 Aug 2025</td>
+                            <td>Michael Johnson</td>
+                            <td>ABC-1234 (Toyota)</td>
+                            <td>Speeding (75 in a 50)</td>
+                            <td>R 1,500</td>
+                            <td><span class="status paid">Paid</span></td>
+                        </tr>
+                        <tr>
+                            <td>21 Aug 2025</td>
+                            <td>Sarah Williams</td>
+                            <td>XYZ-5678 (Honda)</td>
+                            <td>Red Light Violation</td>
+                            <td>R 1,000</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>20 Aug 2025</td>
+                            <td>Robert Davis</td>
+                            <td>DEF-9012 (Ford)</td>
+                            <td>Illegal Parking</td>
+                            <td>R 500</td>
+                            <td><span class="status unpaid">Unpaid</span></td>
+                        </tr>
+                        <tr>
+                            <td>20 Aug 2025</td>
+                            <td>Jennifer Miller</td>
+                            <td>GHI-3456 (Nissan)</td>
+                            <td>Using Mobile Phone</td>
+                            <td>R 1,500</td>
+                            <td><span class="status paid">Paid</span></td>
+                        </tr>
+                        <tr>
+                            <td>19 Aug 2025</td>
+                            <td>David Brown</td>
+                            <td>JKL-7890 (BMW)</td>
+                            <td>No Seat Belt</td>
+                            <td>R 500</td>
+                            <td><span class="status unpaid">Unpaid</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="section-header">
+                <h2>Quick Actions</h2>
+            </div>
+            <div class="quick-actions">
+                <div class="action-card">
+                    <div class="action-icon" style="background: #e3f2fd; color: #1976d2;">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h3>Issue New Fine</h3>
+                    <p>Create and issue a new traffic fine</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon" style="background: #e8f5e9; color: #388e3c;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Vehicle Lookup</h3>
+                    <p>Search vehicle information</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon" style="background: #fff3e0; color: #f57c00;">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>Driver Lookup</h3>
+                    <p>Search driver information</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon" style="background: #fbe9e7; color: #d84315;">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Generate Report</h3>
+                    <p>Create performance reports</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        class FineModel {
+            constructor() {
+                this.fines = [];
+                this.officers = [];
+                this.drivers = [];
+                this.vehicles = [];
+            }
+
+            addFine(fine) {
+                fine.id = this.fines.length + 1;
+                fine.issueDate = new Date();
+                fine.status = 'unpaid';
+                this.fines.push(fine);
+                return fine;
+            }
+
+            getFines() {
+                return this.fines;
+            }
+
+            getOfficerById(id) {
+                return this.officers.find(officer => officer.id === id);
+            }
+        }
+
+        class FineController {
+            constructor(model) {
+                this.model = model;
+            }
+
+            issueFine(driverId, vehicleId, violation, amount, officerId) {
+                const fine = {
+                    driverId,
+                    vehicleId,
+                    violation,
+                    amount,
+                    officerId
+                };
+
+                return this.model.addFine(fine);
+            }
+
+            getFines() {
+                return this.model.getFines();
+            }
+        }
+
+
+        class DbContext {
+            constructor() {
+                this.fines = [
+                    {
+                        id: 1,
+                        date: '21 Aug 2025',
+                        driver: 'Michael Johnson',
+                        vehicle: 'ABC-1234 (Toyota)',
+                        violation: 'Speeding (75 in a 50)',
+                        amount: 'R 1,500',
+                        status: 'paid'
+                    },
+                    {
+                        id: 2,
+                        date: '21 Aug 2025',
+                        driver: 'Sarah Williams',
+                        vehicle: 'XYZ-5678 (Honda)',
+                        violation: 'Red Light Violation',
+                        amount: 'R 1,000',
+                        status: 'pending'
+                    }
+                ];
+
+                this.officers = [
+                    {
+                        id: 1,
+                        name: 'Officer Johnson',
+                        badgeNumber: '8345',
+                        division: 'Traffic Division'
+                    }
+                ];
+            }
+
+            getRecentFines() {
+                return this.fines;
+            }
+
+            getOfficerProfile(id) {
+                return this.officers.find(officer => officer.id === id);
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const dbContext = new DbContext();
+            const model = new FineModel();
+            const controller = new FineController(model);
+
+
+            console.log('Application initialized');
+            console.log('DbContext fines:', dbContext.getRecentFines());
+            console.log('Officer profile:', dbContext.getOfficerProfile(1));
+
+
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

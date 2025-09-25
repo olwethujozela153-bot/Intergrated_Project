@@ -1,0 +1,287 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durban Metro Police - Digital Ticketing System</title>
+    <style>
+        :root {
+            --primary: #1a4f8c;
+            --secondary: #d4a017;
+            --light: #f5f5f5;
+            --dark: #333;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1a4f8c 0%, #0e3a66 100%);
+            color: white;
+            border-radius: 8px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+            .hero h2 {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                max-width: 800px;
+                margin: 0 auto 30px;
+            }
+
+        .user-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .user-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .user-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            }
+
+        .user-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .user-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .user-card p {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+            .btn:hover {
+                background-color: #0e3a66;
+            }
+
+        .system-info {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+            .system-info h2 {
+                text-align: center;
+                margin-bottom: 25px;
+                color: var(--primary);
+            }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .feature {
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+        }
+
+            .feature h3 {
+                margin-bottom: 10px;
+                color: var(--primary);
+            }
+
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+
+
+
+        .user-card {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMWE0ZjhjIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMjUgMjVoMTB2MTBIMjV6TTM1IDM1aDEwdjEwSDM1ek0xNSAzNWgxMHYxMEgxNXpNMjUgMTVoMTB2MTBIMjV6IiBmaWxsPSIjMWE0ZjhjIi8+PC9zdmc+" alt="Durban Metro Police Logo" class="logo">
+            <div>
+                <h1>Durban Metro Police</h1>
+                <div class="subtitle">Digital Traffic Ticketing System</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Welcome to the Digital Ticketing System</h2>
+            <p>Streamlining traffic enforcement and fine management for a safer eThekwini Municipality</p>
+        </div>
+
+        <div class="user-cards">
+            <div class="user-card">
+                <div class="user-icon">👮‍♂</div>
+                <h3>Officer/Admin</h3>
+                <p>Issue electronic tickets, verify driver details, and manage enforcement activities.</p>
+
+                @using (Html.BeginForm("Login", "Officers", FormMethod.Get))
+                {
+                    <button type="submit" style="font-weight: bold; padding: 5px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Login</button>
+                }
+            </div>
+
+            <div class="user-card">
+                <div class="user-icon">🚗</div>
+                <h3>Driver</h3>
+                <p>View and pay traffic fines, track payment status, and manage your profile.</p>
+
+                @using (Html.BeginForm("Login", "User", FormMethod.Get))
+                {
+                    <button type="submit" style="font-weight: bold; padding: 5px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Login</button>
+                }
+            </div>
+
+            <div class="user-card">
+                <div class="user-icon">⚖</div>
+                <h3>Court Official</h3>
+                <p>Access violation records and manage legal proceedings related to traffic offenses.</p>
+                @using (Html.BeginForm("Login", "User", FormMethod.Get))
+                {
+                    <button type="submit" style="font-weight: bold; padding: 5px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Login</button>
+                }
+            </div>
+        </div>
+
+        <div class="system-info">
+            <h2>About the System</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>Digital Ticketing</h3>
+                    <p>Traffic officers can issue electronic tickets via mobile devices, reducing errors and increasing efficiency.</p>
+                </div>
+                <div class="feature">
+                    <h3>Online Payments</h3>
+                    <p>Drivers can conveniently pay fines online through our secure payment gateway.</p>
+                </div>
+                <div class="feature">
+                    <h3>Real-Time Tracking</h3>
+                    <p>Monitor issued fines, payments, and violations in real time for better accountability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Durban Metropolitan Police Service - Digital Traffic Ticketing System</p>
+        <p>© 2023 eThekwini Municipality. All rights reserved.</p>
+    </footer>
+</body>
+</html>
